@@ -6,7 +6,7 @@ part 'todo_list_model.g.dart';
 @JsonSerializable()
 class TodoListModel {
   TodoListModel(this.todoListModel);
-  List<TodoModel>? todoListModel;
+  List<TodoModel> todoListModel;
 
   factory TodoListModel.fromJson(Map<String, dynamic> json) => _$TodoListModelFromJson(json);
 

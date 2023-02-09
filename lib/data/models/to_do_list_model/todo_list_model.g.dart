@@ -8,8 +8,8 @@ part of 'todo_list_model.dart';
 
 TodoListModel _$TodoListModelFromJson(Map<String, dynamic> json) =>
     TodoListModel(
-      (json['todoListModel'] as List<dynamic>?)
-          ?.map((e) => TodoModel.fromJson(e as Map<String, dynamic>))
+      (json['todoListModel'] as List<dynamic>)
+          .map((e) => TodoModel.fromJson(e as Map<String, dynamic>))
           .toList(),
     );
 

@@ -7,29 +7,21 @@ import '../../models/to_do_model/todo_model.dart';
 class TodoLocalDataSource {
   String key = 'key2';
 
-  String todosKeys = 'todosKeys';
-
   final FlutterSecureStorage _secureStorage = const FlutterSecureStorage();
 
-  Future<TodoListModel?> loadTodo() async {
+  Future<List<TodoModel>> loadTodo() async {
     String? data = await _secureStorage.read(key: key);
 
-    if (data == null) return null;
+    if (data == null) return [];
 
     TodoListModel todoListModel = TodoListModel.fromJson(jsonDecode(data));
-    return todoListModel;
+    return todoListModel.todoListModel;
   }
 
   Future<void> saveTodo(TodoModel todoModel) async {
-    TodoListModel? todoListModels = await loadTodo();
+    List<TodoModel> todoListModels = await loadTodo();
 
-    if (todoListModels == null) {
-      TodoListModel todoListModelNew = TodoListModel([todoModel]);
-      await _secureStorage.write(key: key, value: jsonEncode(todoListModelNew));
-      return;
-    }
-
-    todoListModels.todoListModel!.add(todoModel);
+    todoListModels.add(todoModel);
 
     await _secureStorage.write(key: key, value: jsonEncode(todoListModels));
   }
@@ -39,11 +31,10 @@ class TodoLocalDataSource {
   }
 
   Future<bool> deleteTodo(int index) async {
-    TodoListModel? todoListModels = await loadTodo();
-    if (todoListModels == null) return true;
+    List<TodoModel> todoListModels = await loadTodo();
     try {
-      todoListModels.todoListModel!.removeAt(index);
-    } catch(e) {
+      todoListModels.removeAt(index);
+    } catch (e) {
       return false;
     }
     return true;

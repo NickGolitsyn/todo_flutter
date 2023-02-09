@@ -5,14 +5,16 @@ import 'package:flutter/cupertino.dart';
 import 'package:todo/data/source/to_do_source/todo_source.dart';
 import 'package:todo/domain/bloc/todo_bloc.dart';
 import 'package:todo/domain/repository.dart';
-import 'package:todo/home/home_model.dart';
+import 'package:todo/features/ui/home/home_model.dart';
 
-import '../data/models/to_do_model/todo_model.dart';
+import '../../../data/models/to_do_model/todo_model.dart';
 import 'home_view.dart';
 
 abstract class IHomeWidgetModel extends IWidgetModel {
   ListenableState<EntityState<String>> get mainScreeenListenable;
   ListenableState<EntityState<TodoModel>> get totoModelListenable;
+
+  ListenableState<EntityState<List<TodoModel>>> get todoModelListEntity;
 
   TextEditingController get controller;
 
@@ -24,11 +26,9 @@ abstract class IHomeWidgetModel extends IWidgetModel {
 HomeWidgetModel homeWidgetModelFactory(BuildContext context) {
   return HomeWidgetModel(
     HomeModel(
-      TodoBloc(
-        TodoRepository(
-          TodoLocalDataSource(),
-        )
-      ),
+      TodoBloc(TodoRepository(
+        TodoLocalDataSource(),
+      )),
     ),
   );
 }
@@ -42,7 +42,7 @@ class HomeWidgetModel extends WidgetModel<HomeScreenWidget, HomeModel> implement
 
   @override
   void initWidgetModel() {
-    _mainScreenEntity.content('Hello elementary World');
+    model.loadTodo();
 
     _homeBlocStreamSubcription = model.homeBlocStream.listen(_updateStates);
 
@@ -52,13 +52,17 @@ class HomeWidgetModel extends WidgetModel<HomeScreenWidget, HomeModel> implement
   void _updateStates(TodoState state) {
     if (state is TodoDeletedBlocState) {
       print('hi');
-    } 
+    }
     if (state is TodoDeletingErrorBlocState) {
       print('error');
       _mainScreenEntity.error();
     }
     if (state is TodoLoadingBlocState) {
       print('loading...');
+    }
+
+    if (state is TodoLoadedBlocState) {
+      _todoModelEntity.content(state.todoModels);
     }
   }
 
@@ -83,7 +87,12 @@ class HomeWidgetModel extends WidgetModel<HomeScreenWidget, HomeModel> implement
 
   @override
   TextEditingController get controller => _contoller;
-  
+
   @override
   ListenableState<EntityState<TodoModel>> get totoModelListenable => throw UnimplementedError();
+
+  final _todoModelEntity = EntityStateNotifier<List<TodoModel>>();
+
+  @override
+  ListenableState<EntityState<List<TodoModel>>> get todoModelListEntity => _todoModelEntity;
 }

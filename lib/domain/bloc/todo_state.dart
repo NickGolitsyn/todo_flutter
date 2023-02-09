@@ -6,7 +6,13 @@ class TodoInitialBlocState extends TodoState {}
 
 class TodoLoadingBlocState extends TodoState {}
 
-class TodoLoadedBlocState extends TodoState {}
+class TodoLoadedBlocState extends TodoState {
+  TodoLoadedBlocState(
+    this.todoModels,
+  );
+
+  List<TodoModel> todoModels;
+}
 
 class TodoErrorBlocState extends TodoState {}
 
