@@ -32,7 +32,7 @@ class HomeScreenWidget extends ElementaryWidget<IHomeWidgetModel> {
             ),
             ElevatedButton(
               onPressed: () {
-                wm.deleteTodo(5);
+                wm.loadTodo();
               },
               child: const Text('Tap'),
             )

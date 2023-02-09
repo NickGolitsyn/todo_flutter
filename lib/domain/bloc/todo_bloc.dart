@@ -1,4 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:todo/data/models/to_do_list_model/todo_list_model.dart';
 import 'package:todo/domain/repository.dart';
 
 part 'todo_event.dart';
@@ -43,6 +44,8 @@ class TodoBloc extends Bloc<TodoEvent, TodoState> {
     emit(TodoLoadingBlocState());
 
     await Future.delayed(Duration(seconds: 2));
+
+    await _todoRepository.loadTodo();
 
     emit(TodoLoadedBlocState());
   }
