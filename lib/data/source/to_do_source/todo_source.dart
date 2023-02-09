@@ -38,13 +38,15 @@ class TodoLocalDataSource {
     await _secureStorage.deleteAll();
   }
 
-  // Future<void> deleteTodo(TodoModel todoModel) async {
-  //   await _secureStorage.delete(key: key);
-  // }
-  Future<void> deleteTodo(int index) async {
+  Future<bool> deleteTodo(int index) async {
     TodoListModel? todoListModels = await loadTodo();
-    if (todoListModels == null) return;
-    todoListModels.todoListModel!.removeAt(index);
-    await _secureStorage.write(key: key, value: jsonEncode(todoListModels));
+    if (todoListModels == null) return true;
+    try {
+      todoListModels.todoListModel!.removeAt(index);
+    } catch(e) {
+      return false;
+    }
+    return true;
+    // await _secureStorage.write(key: key, value: jsonEncode(todoListModels));
   }
 }

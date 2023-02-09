@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:todo/addTodo.dart';
+import 'package:todo/home/home_view.dart';
 import 'data/models/to_do_list_model/todo_list_model.dart';
 import 'data/models/to_do_model/todo_model.dart';
 import 'data/source/to_do_source/todo_source.dart';
@@ -19,7 +20,7 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
-        home: const MyHomePage());
+        home: const HomeScreenWidget());
   }
 }
 
