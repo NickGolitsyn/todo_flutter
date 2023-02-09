@@ -1,4 +1,5 @@
 import 'package:elementary/elementary.dart';
+import 'package:flutter/material.dart';
 import 'package:todo/data/models/to_do_model/todo_model.dart';
 import 'package:todo/domain/bloc/todo_bloc.dart';
 
@@ -18,5 +19,10 @@ class HomeModel extends ElementaryModel {
 
   void loadTodo() {
     _homeBloc.add(LoadTodoBlocEvent());
+  }
+
+  Future<void> navigateToAddTodo(BuildContext context) async {
+    //* Заменить контейнер на навигацию на нужный экран
+    await Navigator.of(context).push(MaterialPageRoute(builder: (context) => Container()));
   }
 }

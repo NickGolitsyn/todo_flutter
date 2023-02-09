@@ -16,6 +16,8 @@ abstract class IHomeWidgetModel extends IWidgetModel {
 
   ListenableState<EntityState<List<TodoModel>>> get todoModelListEntity;
 
+  Future<void> navigateToAddTodoScreen();
+
   TextEditingController get controller;
 
   void deleteTodo(int index);
@@ -50,17 +52,6 @@ class HomeWidgetModel extends WidgetModel<HomeScreenWidget, HomeModel> implement
   }
 
   void _updateStates(TodoState state) {
-    if (state is TodoDeletedBlocState) {
-      print('hi');
-    }
-    if (state is TodoDeletingErrorBlocState) {
-      print('error');
-      _mainScreenEntity.error();
-    }
-    if (state is TodoLoadingBlocState) {
-      print('loading...');
-    }
-
     if (state is TodoLoadedBlocState) {
       _todoModelEntity.content(state.todoModels);
     }
@@ -95,4 +86,11 @@ class HomeWidgetModel extends WidgetModel<HomeScreenWidget, HomeModel> implement
 
   @override
   ListenableState<EntityState<List<TodoModel>>> get todoModelListEntity => _todoModelEntity;
+
+  @override
+  Future<void> navigateToAddTodoScreen() async {
+    await model.navigateToAddTodo(context);
+
+    model.loadTodo();
+  }
 }
