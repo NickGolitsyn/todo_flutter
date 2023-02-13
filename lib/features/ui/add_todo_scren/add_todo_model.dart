@@ -19,7 +19,7 @@ class AddTodoModel extends ElementaryModel {
   }
 
   Future<void> goBack(BuildContext context) async {
-    // await Navigator.of(context).push(MaterialPageRoute(builder: (context) => HomeScreenWidget()));
-    await Navigator.of(context).pop;
+    await Navigator.of(context).push(MaterialPageRoute(builder: (context) => HomeScreenWidget()));
+    // await Navigator.of(context).pop;
   }
 }
