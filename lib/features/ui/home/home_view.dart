@@ -86,7 +86,7 @@ class HomeScreenWidget extends ElementaryWidget<IHomeWidgetModel> {
                                   Text(todoModels[index].dueTime, style: const TextStyle(color: Colors.white),),
                                   ElevatedButton(
                                     onPressed: () async {
-                                      wm.navigateToAddTodoScreen();
+                                      wm.deleteTodo(index);
                                     },
                                     child: const Text('Delete'),
                                   ),

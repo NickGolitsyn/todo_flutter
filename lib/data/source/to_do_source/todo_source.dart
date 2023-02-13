@@ -14,8 +14,8 @@ class TodoLocalDataSource {
 
     if (data == null) return [];
 
-    TodoListModel todoListModel = TodoListModel.fromJson(jsonDecode(data));
-    return todoListModel.todoListModel;
+    TodoListModel todoListModels = TodoListModel.fromJson(jsonDecode(data));
+    return todoListModels.todoListModel;
   }
 
   Future<bool> saveTodo(TodoModel todoModel) async {
@@ -38,11 +38,11 @@ class TodoLocalDataSource {
   Future<bool> deleteTodo(int index) async {
     List<TodoModel> todoListModels = await loadTodo();
     try {
-      todoListModels.removeAt(index);
+      await todoListModels.removeAt(index);
+      _secureStorage.write(key: key, value: jsonEncode(todoListModels));
     } catch (e) {
       return false;
     }
     return true;
-    // await _secureStorage.write(key: key, value: jsonEncode(todoListModels));
   }
 }
