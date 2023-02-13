@@ -14,21 +14,14 @@ class HomeScreenWidget extends ElementaryWidget<IHomeWidgetModel> {
   @override
   Widget build(IHomeWidgetModel wm) {
     return Scaffold(
+      appBar: AppBar(
+        centerTitle: true,
+        title: const Text("Todo List"),
+      ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {wm.navigateToAddTodoScreen();},
         child: Icon(Icons.add),
       ),
-      // floatingActionButton: EntityStateNotifierBuilder(
-      //   listenableEntityState: wm.todoModelListEntity,
-      //   builder: () {
-      //     // child: FloatingActionButton(
-      //     //   onPressed: () {
-      //     //     wm.
-      //     //   },
-      //     // child: Icon(Icons.add),
-      //     // ),
-      //   },
-      // ),
       body: SizedBox(
         width: double.infinity,
         child: Column(

@@ -34,6 +34,15 @@ class TodoBloc extends Bloc<TodoEvent, TodoState> {
     emit(TodoLoadingBlocState());
 
     await Future.delayed(const Duration(seconds: 2));
+
+    bool res = await _todoRepository.saveTodo(event.todoModel);
+
+    if (res) {
+      emit(TodoAddedBlocState());
+      return;
+    }
+
+    emit(TodoAddingErrorBlocState());
   }
 
   Future<void> _completeTodo(CompleteTodoBlocEvent event, Emitter emit) async {}

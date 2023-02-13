@@ -19,3 +19,7 @@ class TodoErrorBlocState extends TodoState {}
 class TodoDeletedBlocState extends TodoState {}
 
 class TodoDeletingErrorBlocState extends TodoState {}
+
+class TodoAddedBlocState extends TodoState {}
+
+class TodoAddingErrorBlocState extends TodoState {}

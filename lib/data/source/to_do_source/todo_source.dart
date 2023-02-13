@@ -18,12 +18,17 @@ class TodoLocalDataSource {
     return todoListModel.todoListModel;
   }
 
-  Future<void> saveTodo(TodoModel todoModel) async {
+  Future<bool> saveTodo(TodoModel todoModel) async {
     List<TodoModel> todoListModels = await loadTodo();
+    TodoListModel todoListModel = TodoListModel(todoListModels);
 
-    todoListModels.add(todoModel);
-
-    await _secureStorage.write(key: key, value: jsonEncode(todoListModels));
+    try {
+      todoListModel.todoListModel.add(todoModel);
+      await _secureStorage.write(key: key, value: jsonEncode(todoListModel));
+    } catch (e) {
+      return false;
+    }
+    return true;
   }
 
   Future<void> deleteAllTodo() async {

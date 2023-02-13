@@ -10,7 +10,7 @@ class AddTodoModel extends ElementaryModel {
 
   Stream<TodoState> get homeBlocStream => _addTodoBloc.stream;
 
-  void addTodo(TodoModel todoModel) {
+  void addTodo(TodoModel todoModel) async {
     _addTodoBloc.add(AddTodoBlocEvent(todoModel));
   }
 
@@ -19,7 +19,7 @@ class AddTodoModel extends ElementaryModel {
   }
 
   Future<void> goBack(BuildContext context) async {
-    //* Заменить контейнер на навигацию на нужный экран
     await Navigator.of(context).push(MaterialPageRoute(builder: (context) => HomeScreenWidget()));
+    // await Navigator.pop(context);
   }
 }

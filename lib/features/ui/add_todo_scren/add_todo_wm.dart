@@ -15,9 +15,18 @@ abstract class IAddTodoWidgetModel extends IWidgetModel {
 
   TextEditingController get controller;
 
+  // final TextEditingController title = TextEditingController();
+  TextEditingController get title;
+
+  TextEditingController get description;
+
+  TextEditingController get date;
+
   void deleteTodo(int index);
 
   void loadTodo();
+
+  void addTodo(TodoModel todoModel);
 }
 
 AddTodoWidgetModel addTodoWidgetModelFactory(BuildContext context) {
@@ -38,10 +47,12 @@ class AddTodoWidgetModel extends WidgetModel<AddTodoScreenWidget, AddTodoModel> 
   // final _todoModelListEntity = EntityStateNotifier<String>();
   // final _todoModelListEntity = ListenableState<EntityState<TodoModel>>();
   final _addTodoScreeenListenable = EntityStateNotifier<TodoModel>();
+
+  final _contoller = TextEditingController();
   
   @override
   // TODO: implement controller
-  TextEditingController get controller => throw UnimplementedError();
+  TextEditingController get controller => _contoller;
   
   @override
   void deleteTodo(int index) {
@@ -69,5 +80,26 @@ class AddTodoWidgetModel extends WidgetModel<AddTodoScreenWidget, AddTodoModel> 
     await model.goBack(context);
 
     model.loadTodo();
+  }
+  
+  final _title = TextEditingController();
+
+  final _description = TextEditingController();
+
+  final _date = TextEditingController();
+
+  @override
+  TextEditingController get title => _title;
+
+  @override
+  TextEditingController get description => _description;
+
+  @override
+  TextEditingController get date => _date;
+  
+  @override
+  void addTodo(TodoModel todoModel) async {
+    model.addTodo(todoModel);
+    model.goBack(context);
   }
 }
