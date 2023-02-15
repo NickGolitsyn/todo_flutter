@@ -14,9 +14,6 @@ abstract class IAddTodoWidgetModel extends IWidgetModel {
 
   void goBack();
 
-  TextEditingController get controller;
-
-  // final TextEditingController title = TextEditingController();
   TextEditingController get title;
 
   TextEditingController get description;
@@ -24,12 +21,20 @@ abstract class IAddTodoWidgetModel extends IWidgetModel {
   TextEditingController get date;
 
   void addTodo(TodoModel todoModel);
+
+  late Priority selectedPriority;
 }
 
 AddTodoWidgetModel addTodoWidgetModelFactory(BuildContext context) {
-  return AddTodoWidgetModel(AddTodoModel(TodoBloc(TodoRepository(
-    TodoLocalDataSource(),
-  ))));
+  return AddTodoWidgetModel(
+    AddTodoModel(
+      TodoBloc(
+        TodoRepository(
+          TodoLocalDataSource(),
+        )
+      )
+    )
+  );
 }
 
 class AddTodoWidgetModel extends WidgetModel<AddTodoScreenWidget, AddTodoModel> implements IAddTodoWidgetModel {
@@ -88,4 +93,7 @@ class AddTodoWidgetModel extends WidgetModel<AddTodoScreenWidget, AddTodoModel> 
   void addTodo(TodoModel todoModel) async {
     model.addTodo(todoModel);
   }
+  
+  @override
+  Priority selectedPriority = Priority.none;
 }

@@ -18,13 +18,9 @@ class TodoBloc extends Bloc<TodoEvent, TodoState> {
   Future<void> _deleteTodo(DeleteTodoBlocEvent event, Emitter emit) async {
     emit(TodoLoadingBlocState());
 
-    print('deleting started');
-
-    await Future.delayed(const Duration(seconds: 2));
+    await Future.delayed(Duration(seconds: 2));
 
     bool res = await _todoRepository.deleteTodo(event.index);
-
-    print(res);
 
     if (res) {
       emit(TodoDeletedBlocState());
@@ -36,8 +32,6 @@ class TodoBloc extends Bloc<TodoEvent, TodoState> {
 
   Future<void> _addTodo(AddTodoBlocEvent event, Emitter emit) async {
     emit(TodoLoadingBlocState());
-
-    await Future.delayed(const Duration(seconds: 2));
 
     bool res = await _todoRepository.saveTodo(event.todoModel);
 
@@ -53,9 +47,6 @@ class TodoBloc extends Bloc<TodoEvent, TodoState> {
 
   Future<void> _loadTodo(LoadTodoBlocEvent event, Emitter emit) async {
     emit(TodoLoadingBlocState());
-    print('load init');
-
-    await Future.delayed(const Duration(seconds: 2));
 
     List<TodoModel> todoModel = await _todoRepository.loadTodo();
 

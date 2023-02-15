@@ -20,4 +20,6 @@ class AddTodoModel extends ElementaryModel {
   void goBack(BuildContext context) {
     Navigator.of(context).pop();
   }
+
+  final Priority selectedPriority = Priority.none;
 }

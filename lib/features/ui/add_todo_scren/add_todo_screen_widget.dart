@@ -86,9 +86,43 @@ class AddTodoScreenWidget extends ElementaryWidget<IAddTodoWidgetModel> {
                         },
                       ),
                     ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        ElevatedButton(
+                          // color: _selectedButton == 0 ? Colors.blue : Colors.grey,
+                          onPressed: () {
+                            wm.selectedPriority = Priority.high;
+                            print(wm.selectedPriority);
+                          },
+                          child: Text('High'),
+                        ),
+                        ElevatedButton(
+                          onPressed: () {
+                            wm.selectedPriority = Priority.medium;
+                            print(wm.selectedPriority);
+                          },
+                          child: Text('Medium'),
+                        ),
+                        ElevatedButton(
+                          onPressed: () {
+                            wm.selectedPriority = Priority.low;
+                            print(wm.selectedPriority);
+                          },
+                          child: Text('Low'),
+                        ),
+                      ],
+                    ),
                     ElevatedButton(
                       onPressed: () {
-                        wm.addTodo(TodoModel(title: wm.title.text, description: wm.description.text, dueTime: wm.date.text, priority: Priority.low));
+                        wm.addTodo(
+                          TodoModel(
+                            title: wm.title.text, 
+                            description: wm.description.text, 
+                            dueTime: wm.date.text, 
+                            priority: wm.selectedPriority,
+                          ),
+                        );
                       },
                       child: const Text("Add new Todo"),
                     ),

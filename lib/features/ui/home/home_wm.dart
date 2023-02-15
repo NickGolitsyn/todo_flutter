@@ -28,9 +28,11 @@ abstract class IHomeWidgetModel extends IWidgetModel {
 HomeWidgetModel homeWidgetModelFactory(BuildContext context) {
   return HomeWidgetModel(
     HomeModel(
-      TodoBloc(TodoRepository(
-        TodoLocalDataSource(),
-      )),
+      TodoBloc(
+        TodoRepository(
+          TodoLocalDataSource(),
+        )
+      ),
     ),
   );
 }
@@ -52,8 +54,14 @@ class HomeWidgetModel extends WidgetModel<HomeScreenWidget, HomeModel> implement
   }
 
   void _updateStates(TodoState state) {
+    if(state is TodoLoadingBlocState) {
+      print('loading');
+    }
     if (state is TodoLoadedBlocState) {
       _todoModelEntity.content(state.todoModels);
+    }
+    if (state is TodoDeletedBlocState) {
+      model.loadTodo();
     }
   }
 
