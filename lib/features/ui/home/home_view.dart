@@ -19,8 +19,8 @@ class HomeScreenWidget extends ElementaryWidget<IHomeWidgetModel> {
         title: const Text("Todo List"),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {wm.navigateToAddTodoScreen();},
-        child: Icon(Icons.add),
+        onPressed: wm.navigateToAddTodoScreen,
+        child: const Icon(Icons.add),
       ),
       body: SizedBox(
         width: double.infinity,
@@ -47,19 +47,19 @@ class HomeScreenWidget extends ElementaryWidget<IHomeWidgetModel> {
                     itemCount: todoModels.length,
                     itemBuilder: (context, index) {
                       return Padding(
-                        padding: const EdgeInsets.only(top: 10, bottom: 10, left: 50, right: 50),
-                        // child: Slidable(
-                        //   endActionPane: ActionPane(
-                        //     motion: StretchMotion(),
-                        //     children: [
-                        //       SlidableAction(
-                        //         onPressed: doNothing,
-                        //         icon: Icons.delete,
-                        //         backgroundColor: Colors.red,
-                        //         borderRadius: BorderRadius.circular(12),
-                        //       )
-                        //     ],
-                        //   ),
+                          padding: const EdgeInsets.only(top: 10, bottom: 10, left: 50, right: 50),
+                          // child: Slidable(
+                          //   endActionPane: ActionPane(
+                          //     motion: StretchMotion(),
+                          //     children: [
+                          //       SlidableAction(
+                          //         onPressed: doNothing,
+                          //         icon: Icons.delete,
+                          //         backgroundColor: Colors.red,
+                          //         borderRadius: BorderRadius.circular(12),
+                          //       )
+                          //     ],
+                          //   ),
                           child: Container(
                             width: double.infinity,
                             decoration: BoxDecoration(
@@ -75,27 +75,34 @@ class HomeScreenWidget extends ElementaryWidget<IHomeWidgetModel> {
                                   case Priority.none:
                                     return Colors.blue;
                                 }
-                              } ()),
+                              }()),
                             ),
                             child: Padding(
                               padding: const EdgeInsets.only(top: 20, bottom: 20),
-                              child: Column(
-                                children : [
-                                  Text(todoModels[index].title, style: const TextStyle(color: Colors.white),),
-                                  Text(todoModels[index].description, style: const TextStyle(color: Colors.white),),
-                                  Text(todoModels[index].dueTime, style: const TextStyle(color: Colors.white),),
-                                  ElevatedButton(
-                                    onPressed: () async {
-                                      wm.deleteTodo(index);
-                                    },
-                                    child: const Text('Delete'),
-                                  ),
-                                ]
-                              ),
+                              child: Column(children: [
+                                Text(
+                                  todoModels[index].title,
+                                  style: const TextStyle(color: Colors.white),
+                                ),
+                                Text(
+                                  todoModels[index].description,
+                                  style: const TextStyle(color: Colors.white),
+                                ),
+                                Text(
+                                  todoModels[index].dueTime,
+                                  style: const TextStyle(color: Colors.white),
+                                ),
+                                ElevatedButton(
+                                  onPressed: () async {
+                                    wm.deleteTodo(index);
+                                  },
+                                  child: const Text('Delete'),
+                                ),
+                              ]),
                             ),
                           )
-                        // ),
-                      );
+                          // ),
+                          );
                     },
                   ),
                 );

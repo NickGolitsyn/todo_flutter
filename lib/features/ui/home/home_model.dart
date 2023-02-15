@@ -23,7 +23,6 @@ class HomeModel extends ElementaryModel {
   }
 
   Future<void> navigateToAddTodo(BuildContext context) async {
-    //* Заменить контейнер на навигацию на нужный экран
-    await Navigator.of(context).push(MaterialPageRoute(builder: (context) => AddTodoScreenWidget()));
+    await Navigator.of(context).push(MaterialPageRoute(builder: (context) => const AddTodoScreenWidget()));
   }
 }

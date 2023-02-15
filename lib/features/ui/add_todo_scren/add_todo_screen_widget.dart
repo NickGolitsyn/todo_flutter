@@ -68,19 +68,16 @@ class AddTodoScreenWidget extends ElementaryWidget<IAddTodoWidgetModel> {
                     //     ),
                     //   ),
                     // ),
-                     Padding(
-                       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
-                       child: TextField(
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
+                      child: TextField(
                         controller: wm.date,
-                        decoration: InputDecoration(
-                          border: OutlineInputBorder(),
-                          labelText: 'Due Date'
-                        ),
+                        decoration: const InputDecoration(border: OutlineInputBorder(), labelText: 'Due Date'),
                         onTap: () async {
                           DateTime? pickeddate = await showDatePicker(
-                            context: context, 
-                            initialDate: DateTime.now(), 
-                            firstDate: DateTime.now(), 
+                            context: context,
+                            initialDate: DateTime.now(),
+                            firstDate: DateTime.now(),
                             lastDate: DateTime(2100),
                           );
                           if (pickeddate != null) {
@@ -93,7 +90,7 @@ class AddTodoScreenWidget extends ElementaryWidget<IAddTodoWidgetModel> {
                       onPressed: () {
                         wm.addTodo(TodoModel(title: wm.title.text, description: wm.description.text, dueTime: wm.date.text, priority: Priority.low));
                       },
-                      child: Text("Go back"),
+                      child: const Text("Add new Todo"),
                     ),
                   ],
                 );

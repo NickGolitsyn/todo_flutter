@@ -1,6 +1,7 @@
+import 'dart:async';
+
 import 'package:elementary/elementary.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart';
 import 'package:todo/data/models/to_do_model/todo_model.dart';
 import 'package:todo/data/source/to_do_source/todo_source.dart';
 import 'package:todo/domain/bloc/todo_bloc.dart';
@@ -11,7 +12,7 @@ import 'package:todo/features/ui/add_todo_scren/add_todo_screen_widget.dart';
 abstract class IAddTodoWidgetModel extends IWidgetModel {
   ListenableState<EntityState<TodoModel>> get addTodoScreeenListenable;
 
-  Future<void> goBack();
+  void goBack();
 
   TextEditingController get controller;
 
@@ -22,66 +23,52 @@ abstract class IAddTodoWidgetModel extends IWidgetModel {
 
   TextEditingController get date;
 
-  void deleteTodo(int index);
-
-  void loadTodo();
-
   void addTodo(TodoModel todoModel);
 }
 
 AddTodoWidgetModel addTodoWidgetModelFactory(BuildContext context) {
-  return AddTodoWidgetModel(
-    AddTodoModel(
-      TodoBloc(
-        TodoRepository(
-          TodoLocalDataSource(),
-        )
-      )
-    )
-  );
-}  
+  return AddTodoWidgetModel(AddTodoModel(TodoBloc(TodoRepository(
+    TodoLocalDataSource(),
+  ))));
+}
 
 class AddTodoWidgetModel extends WidgetModel<AddTodoScreenWidget, AddTodoModel> implements IAddTodoWidgetModel {
   AddTodoWidgetModel(AddTodoModel model) : super(model);
 
-  // final _todoModelListEntity = EntityStateNotifier<String>();
-  // final _todoModelListEntity = ListenableState<EntityState<TodoModel>>();
   final _addTodoScreeenListenable = EntityStateNotifier<TodoModel>();
 
   final _contoller = TextEditingController();
-  
+
   @override
-  // TODO: implement controller
   TextEditingController get controller => _contoller;
-  
+
   @override
-  void deleteTodo(int index) {
-    // TODO: implement deleteTodo
-  }
-  
-  @override
-  void loadTodo() {
-    // TODO: implement loadTodo
-  }
-  
-  @override
-  // TODO: implement mainScreeenListenable
-  // ListenableState<EntityState<TodoModel>> get mainScreeenListenable => throw UnimplementedError();
   ListenableState<EntityState<TodoModel>> get addTodoScreeenListenable => _addTodoScreeenListenable;
-  
-  // @override
-  // Future<void> navigateToAddTodoScreen() {
-  //   // TODO: implement navigateToAddTodoScreen
-  //   throw UnimplementedError();
-  // }
+
+  late final StreamSubscription<TodoState> _todoBlocStreamSubscription;
 
   @override
-  Future<void> goBack() async {
-    await model.goBack(context);
+  void initWidgetModel() {
+    _todoBlocStreamSubscription = model.homeBlocStream.listen(_updateTodoBlocStates);
 
-    model.loadTodo();
+    super.initWidgetModel();
   }
-  
+
+  Future<void> _updateTodoBlocStates(TodoState state) async {
+    if (state is TodoAddedBlocState) {
+      model.goBack(context);
+    }
+  }
+
+  @override
+  void dispose() {
+    _todoBlocStreamSubscription.cancel();
+    super.dispose();
+  }
+
+  @override
+  void goBack() => model.goBack(context);
+
   final _title = TextEditingController();
 
   final _description = TextEditingController();
@@ -96,10 +83,9 @@ class AddTodoWidgetModel extends WidgetModel<AddTodoScreenWidget, AddTodoModel> 
 
   @override
   TextEditingController get date => _date;
-  
+
   @override
   void addTodo(TodoModel todoModel) async {
     model.addTodo(todoModel);
-    model.goBack(context);
   }
 }

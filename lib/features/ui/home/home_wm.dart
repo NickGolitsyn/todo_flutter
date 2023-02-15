@@ -69,7 +69,6 @@ class HomeWidgetModel extends WidgetModel<HomeScreenWidget, HomeModel> implement
   @override
   void deleteTodo(int index) {
     model.deleteTodo(index);
-    print('done');
     model.loadTodo();
   }
 
@@ -92,5 +91,6 @@ class HomeWidgetModel extends WidgetModel<HomeScreenWidget, HomeModel> implement
   @override
   Future<void> navigateToAddTodoScreen() async {
     await model.navigateToAddTodo(context);
+    model.loadTodo();
   }
 }

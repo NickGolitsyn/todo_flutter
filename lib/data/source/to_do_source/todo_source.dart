@@ -37,9 +37,11 @@ class TodoLocalDataSource {
 
   Future<bool> deleteTodo(int index) async {
     List<TodoModel> todoListModels = await loadTodo();
+
     try {
-      await todoListModels.removeAt(index);
-      _secureStorage.write(key: key, value: jsonEncode(todoListModels));
+      todoListModels.removeAt(index);
+
+      await _secureStorage.write(key: key, value: jsonEncode(TodoListModel(todoListModels)));
     } catch (e) {
       return false;
     }
