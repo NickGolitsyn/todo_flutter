@@ -1,5 +1,4 @@
 import 'package:elementary/elementary.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:todo/data/models/to_do_model/todo_model.dart';
@@ -28,16 +27,6 @@ class AddTodoScreenWidget extends ElementaryWidget<IAddTodoWidgetModel> {
               builder: (context, TodoModel? todoModels) {
                 return Column(
                   children: [
-                    //  TextFormField(
-                    //   controller: wm.title,
-                    //   decoration: InputDecoration(labelText: 'Title'),
-                    //   validator: (value) {
-                    //     if (value!.isEmpty) {
-                    //       return 'Please enter some text';
-                    //     }
-                    //     return null;
-                    //   },
-                    // ),
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
                       child: TextField(
@@ -58,16 +47,6 @@ class AddTodoScreenWidget extends ElementaryWidget<IAddTodoWidgetModel> {
                         ),
                       ),
                     ),
-                    // Padding(
-                    //   padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
-                    //   child: TextField(
-                    //     controller: wm.description,
-                    //     decoration: const InputDecoration(
-                    //       border: OutlineInputBorder(),
-                    //       labelText: 'Description',
-                    //     ),
-                    //   ),
-                    // ),
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
                       child: TextField(

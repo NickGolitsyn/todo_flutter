@@ -54,11 +54,12 @@ class HomeWidgetModel extends WidgetModel<HomeScreenWidget, HomeModel> implement
   }
 
   void _updateStates(TodoState state) {
-    if(state is TodoLoadingBlocState) {
-      print('loading');
-    }
     if (state is TodoLoadedBlocState) {
       _todoModelEntity.content(state.todoModels);
+    }
+    if (state is TodoDeletingBlocState) {
+      print('Deleting loader');
+      _todoModelEntity.loading();
     }
     if (state is TodoDeletedBlocState) {
       model.loadTodo();

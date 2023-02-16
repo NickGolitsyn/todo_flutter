@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/test/test_flutter_secure_storage_platform.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:todo/data/models/to_do_model/todo_model.dart';
+import 'package:todo/domain/bloc/todo_bloc.dart';
 import 'home_wm.dart';
 
 class HomeScreenWidget extends ElementaryWidget<IHomeWidgetModel> {
@@ -38,7 +39,7 @@ class HomeScreenWidget extends ElementaryWidget<IHomeWidgetModel> {
 
                 if (todoModels.isEmpty) {
                   return const Center(
-                    child: Text('У вас нет задач'),
+                    child: Text('You have no tasks'),
                   );
                 }
 
@@ -67,13 +68,13 @@ class HomeScreenWidget extends ElementaryWidget<IHomeWidgetModel> {
                               color: (() {
                                 switch (todoModels[index].priority) {
                                   case Priority.high:
-                                    return Colors.red;
+                                    return Colors.red[400];
                                   case Priority.medium:
-                                    return Colors.yellow;
+                                    return Colors.yellow[400];
                                   case Priority.low:
-                                    return Colors.green;
+                                    return Colors.green[400];
                                   case Priority.none:
-                                    return Colors.blue;
+                                    return Colors.grey[400];
                                 }
                               }()),
                             ),

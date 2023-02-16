@@ -18,6 +18,8 @@ class TodoBloc extends Bloc<TodoEvent, TodoState> {
   Future<void> _deleteTodo(DeleteTodoBlocEvent event, Emitter emit) async {
     emit(TodoLoadingBlocState());
 
+    emit(TodoDeletingBlocState());
+
     await Future.delayed(Duration(seconds: 2));
 
     bool res = await _todoRepository.deleteTodo(event.index);
