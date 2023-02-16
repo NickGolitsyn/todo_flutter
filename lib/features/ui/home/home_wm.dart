@@ -90,7 +90,7 @@ class HomeWidgetModel extends WidgetModel<HomeScreenWidget, HomeModel> implement
   @override
   Future<void> navigateToAddTodoScreen() async {
     await model.navigateToAddTodo(context);
-
+    //* Этот код выполнится полсе того как ты вернёшься с экрана добавления todo
     model.loadTodo();
   }
 }
