@@ -14,6 +14,8 @@ abstract class IHomeWidgetModel extends IWidgetModel {
   ListenableState<EntityState<String>> get mainScreeenListenable;
   ListenableState<EntityState<TodoModel>> get totoModelListenable;
 
+  ListenableState<EntityState<bool>> get loading;
+
   ListenableState<EntityState<List<TodoModel>>> get todoModelListEntity;
 
   Future<void> navigateToAddTodoScreen();
@@ -40,11 +42,18 @@ class HomeWidgetModel extends WidgetModel<HomeScreenWidget, HomeModel> implement
 
   final _mainScreenEntity = EntityStateNotifier<String>();
 
+  final _loadingEntity = EntityStateNotifier<bool>();
+
+  @override
+  ListenableState<EntityState<bool>> get loading => _loadingEntity;
+
   late final StreamSubscription<TodoState> _homeBlocStreamSubcription;
 
   @override
   void initWidgetModel() {
     model.loadTodo();
+
+    _loadingEntity.content(false);
 
     _homeBlocStreamSubcription = model.homeBlocStream.listen(_updateStates);
 
@@ -54,6 +63,23 @@ class HomeWidgetModel extends WidgetModel<HomeScreenWidget, HomeModel> implement
   void _updateStates(TodoState state) {
     if (state is TodoLoadedBlocState) {
       _todoModelEntity.content(state.todoModels);
+      _loadingEntity.content(false);
+    }
+
+    if (state is TodoAddedBlocState) {
+      _loadingEntity.content(false);
+    }
+
+    if (state is TodoLoadingBlocState) {
+      _loadingEntity.content(true);
+    }
+
+    if (state is TodoDeletedBlocState) {
+      model.loadTodo();
+      _loadingEntity.content(false);
+    }
+    if (state is TodoDeletingErrorBlocState) {
+      _loadingEntity.content(false);
     }
   }
 
@@ -69,6 +95,7 @@ class HomeWidgetModel extends WidgetModel<HomeScreenWidget, HomeModel> implement
   @override
   void deleteTodo(int index) {
     model.deleteTodo(index);
+    model.loadTodo();
   }
 
   @override
@@ -90,7 +117,6 @@ class HomeWidgetModel extends WidgetModel<HomeScreenWidget, HomeModel> implement
   @override
   Future<void> navigateToAddTodoScreen() async {
     await model.navigateToAddTodo(context);
-    //* Этот код выполнится полсе того как ты вернёшься с экрана добавления todo
     model.loadTodo();
   }
 }

@@ -9,7 +9,7 @@ class TodoRepository {
 
   final TodoLocalDataSource _todoLocalDataSource;
 
-  Future<void> saveTodo(TodoModel todoModel) => _todoLocalDataSource.saveTodo(todoModel);
+  Future<bool> saveTodo(TodoModel todoModel) => _todoLocalDataSource.saveTodo(todoModel);
 
   Future<List<TodoModel>> loadTodo() => _todoLocalDataSource.loadTodo();
 

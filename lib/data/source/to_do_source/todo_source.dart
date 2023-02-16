@@ -14,16 +14,23 @@ class TodoLocalDataSource {
 
     if (data == null) return [];
 
-    TodoListModel todoListModel = TodoListModel.fromJson(jsonDecode(data));
-    return todoListModel.todoListModel;
+    TodoListModel todoListModels = TodoListModel.fromJson(jsonDecode(data));
+    return todoListModels.todoListModel;
   }
 
-  Future<void> saveTodo(TodoModel todoModel) async {
+  Future<bool> saveTodo(TodoModel todoModel) async {
     List<TodoModel> todoListModels = await loadTodo();
-
-    todoListModels.add(todoModel);
-
-    await _secureStorage.write(key: key, value: jsonEncode(todoListModels));
+    TodoListModel todoListModel = TodoListModel(todoListModels);
+    if(todoModel.title != "" && todoModel.description != "" && todoModel.dueTime != "") {
+      try {
+        todoListModel.todoListModel.add(todoModel);
+        await _secureStorage.write(key: key, value: jsonEncode(todoListModel));
+      } catch (e) {
+        return false;
+      }
+      return true;
+    }
+    return false;
   }
 
   Future<void> deleteAllTodo() async {
@@ -32,12 +39,14 @@ class TodoLocalDataSource {
 
   Future<bool> deleteTodo(int index) async {
     List<TodoModel> todoListModels = await loadTodo();
+
     try {
       todoListModels.removeAt(index);
+
+      await _secureStorage.write(key: key, value: jsonEncode(TodoListModel(todoListModels)));
     } catch (e) {
       return false;
     }
     return true;
-    // await _secureStorage.write(key: key, value: jsonEncode(todoListModels));
   }
 }
