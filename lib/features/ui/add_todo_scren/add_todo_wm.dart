@@ -27,11 +27,13 @@ abstract class IAddTodoWidgetModel extends IWidgetModel {
 
   void addTodo();
 
+  void noneTodo();
+
   void lowTodo();
 
   void mediumTodo();
 
-  void hightTodo();
+  void highTodo();
 
   Future<void> pickDate();
 
@@ -66,7 +68,7 @@ class AddTodoWidgetModel extends WidgetModel<AddTodoScreenWidget, AddTodoModel> 
 
   @override
   void initWidgetModel() {
-    _priotityEntity.content(Priority.low);
+    _priotityEntity.content(Priority.none);
     _errorEntity.content(false);
 
     _todoBlocStreamSubscription = model.homeBlocStream.listen(_updateTodoBlocStates);
@@ -105,15 +107,7 @@ class AddTodoWidgetModel extends WidgetModel<AddTodoScreenWidget, AddTodoModel> 
   TextEditingController get date => _dateController;
 
   bool _validateData() {
-    if (_dateController.text.isEmpty) {
-      _errorEntity.content(true);
-      return true;
-    }
     if (_titleController.text.isEmpty) {
-      _errorEntity.content(true);
-      return true;
-    }
-    if (_descriptionController.text.isEmpty) {
       _errorEntity.content(true);
       return true;
     }
@@ -142,7 +136,7 @@ class AddTodoWidgetModel extends WidgetModel<AddTodoScreenWidget, AddTodoModel> 
   Priority selectedPriority = Priority.none;
 
   @override
-  void hightTodo() {
+  void highTodo() {
     _priotityEntity.content(Priority.high);
   }
 
@@ -154,6 +148,11 @@ class AddTodoWidgetModel extends WidgetModel<AddTodoScreenWidget, AddTodoModel> 
   @override
   void mediumTodo() {
     _priotityEntity.content(Priority.medium);
+  }
+
+  @override
+  void noneTodo() {
+    _priotityEntity.content(Priority.none);
   }
 
   @override

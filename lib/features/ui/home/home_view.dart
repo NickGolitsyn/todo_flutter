@@ -25,6 +25,7 @@ class HomeScreenWidget extends ElementaryWidget<IHomeWidgetModel> {
         builder: (context, bool? data) {
           return Stack(
             children: [
+              data == true ? const Text('cmon') : const Text('hi'),
               SizedBox(
                 width: double.infinity,
                 child: Column(
@@ -114,10 +115,7 @@ class HomeScreenWidget extends ElementaryWidget<IHomeWidgetModel> {
                   ],
                 ),
               ),
-              if (data == true)
-                const Center(
-                  child: CircularProgressIndicator(),
-                )
+              // data == true ? const Center(child: CircularProgressIndicator(),) : const Text('hi')
             ],
           );
         },

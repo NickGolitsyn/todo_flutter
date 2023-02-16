@@ -70,7 +70,7 @@ class HomeWidgetModel extends WidgetModel<HomeScreenWidget, HomeModel> implement
       _loadingEntity.content(false);
     }
 
-    if (state is TodoLoadingBlocState) {
+    if (state is TodoDeletingBlocState) {
       _loadingEntity.content(true);
     }
 

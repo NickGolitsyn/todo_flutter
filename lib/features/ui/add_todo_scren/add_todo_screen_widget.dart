@@ -1,7 +1,11 @@
+import 'dart:io';
+
 import 'package:elementary/elementary.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:todo/data/models/to_do_model/todo_model.dart';
 import 'package:todo/features/ui/add_todo_scren/add_todo_wm.dart';
+import 'package:flutter/cupertino.dart' as cu;
 
 class AddTodoScreenWidget extends ElementaryWidget<IAddTodoWidgetModel> {
   const AddTodoScreenWidget({
@@ -26,7 +30,7 @@ class AddTodoScreenWidget extends ElementaryWidget<IAddTodoWidgetModel> {
                 controller: wm.title,
                 decoration: const InputDecoration(
                   border: OutlineInputBorder(),
-                  labelText: 'Title',
+                  labelText: 'Title*',
                 ),
               ),
             ),
@@ -49,6 +53,59 @@ class AddTodoScreenWidget extends ElementaryWidget<IAddTodoWidgetModel> {
                 onTap: wm.pickDate,
               ),
             ),
+            // if (Platform.isIOS) {
+            //   // DateTime dateTime = initialDate;
+            //   await cu.showCupertinoModalPopup<DateTime>(
+            //     context: context, 
+            //     builder: (context) => Container(
+            //       height: 216, 
+            //       padding: const EdgeInsets.only(top: 6.0),
+            //       margin: EdgeInsets.only(
+            //         bottom: MediaQuery.of(context).viewInsets.bottom,
+            //       ),
+            //       color: AppTheme.of(context).bg.menu,
+            //       child: cu.Column(
+            //         mainAxisSize: cu.MainAxisSize.min,
+            //         children: [
+            //           Expanded(
+            //             child: cu.CupertinoTheme(
+            //               data: const cu.CupertinoThemeData(
+            //                 textTheme: cu.CupertinoTextThemeData(
+            //                   dateTimePickerTextStyle: TextStyle(
+            //                     color: Colors.white,
+            //                     fontSize: 16,
+            //                   ),
+            //                 ),
+            //               ),
+            //             child: cu.CupertinoDatePicker(
+            //               backgroundColor: AppTheme.of(context).bg.menu,
+            //               initialDateTime: initialDate,
+            //               onDateTimeChanged: (dt) => dateTime = dt,
+            //               maximumDate: lastDate,
+            //               minimumDate: firstDate,
+            //               mode: cu.CupertinoDatePickerMode.date,
+            //             ),
+            //           ),
+            //         ),
+            //         Padding(
+            //           padding: const EdgeInsets.symmetric(vertical: 30, horizontal: 16),
+            //           child: SizedBox(
+            //             height: 48,
+            //             child: AppButton.primary(
+            //               onPressed: Navigator.of(context).pop,
+            //               size: AppButtonsSize.big,
+            //               child: const Text(
+            //                 'Готово',
+            //               ),
+            //             ),
+            //           ),
+            //         ),
+            //       ],
+            //     ),
+            //   ),
+            // );
+            // return dateTime;
+            // }
             EntityStateNotifierBuilder(
               listenableEntityState: wm.errorListenable,
               builder: (context, bool? data) {
@@ -60,7 +117,7 @@ class AddTodoScreenWidget extends ElementaryWidget<IAddTodoWidgetModel> {
                         height: 20,
                       ),
                       Text(
-                        'Не все поля заполнены',
+                        'Title cannot me empty',
                         style: TextStyle(
                           color: Colors.red,
                         ),
@@ -84,68 +141,96 @@ class AddTodoScreenWidget extends ElementaryWidget<IAddTodoWidgetModel> {
                   children: [
                     Expanded(
                       child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 16),
+                        padding: const EdgeInsets.only(left: 8),
                         child: InkWell(
-                          onTap: wm.lowTodo,
+                          onTap: wm.highTodo,
                           child: Container(
-                            color: priority != Priority.low ? Colors.yellow : Colors.black,
-                            child: Padding(
-                              padding: const EdgeInsets.symmetric(
-                                vertical: 6,
-                              ),
-                              child: Align(
-                                child: Text(
-                                  'Low',
-                                  style: TextStyle(
-                                    color: priority != Priority.low ? Colors.black : Colors.white,
-                                  ),
-                                ),
-                              ),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.only(topLeft: Radius.circular(6), bottomLeft: Radius.circular(6)),
+                              color: priority != Priority.high ? Colors.indigo[100] : Colors.indigo,
+                              // border: const Border(right: BorderSide(
+                              //   color: Colors.red,
+                              //   width: 3.0
+                              // ))
                             ),
-                          ),
-                        ),
-                      ),
-                    ),
-                    Expanded(
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 16),
-                        child: InkWell(
-                          onTap: wm.mediumTodo,
-                          child: Container(
-                            color: priority != Priority.medium ? Colors.yellow : Colors.black,
                             child: Padding(
                               padding: const EdgeInsets.symmetric(
-                                vertical: 6,
+                                vertical: 10,
                               ),
                               child: Align(
                                 child: Text(
-                                  'Medium',
-                                  style: TextStyle(
-                                    color: priority != Priority.medium ? Colors.black : Colors.white,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                    Expanded(
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 16),
-                        child: InkWell(
-                          onTap: wm.hightTodo,
-                          child: Container(
-                            color: priority != Priority.high ? Colors.yellow : Colors.black,
-                            child: Padding(
-                              padding: const EdgeInsets.symmetric(
-                                vertical: 6,
-                              ),
-                              child: Align(
-                                child: Text(
-                                  'Hight',
+                                  'High',
                                   style: TextStyle(
                                     color: priority != Priority.high ? Colors.black : Colors.white,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    Expanded(
+                      child: InkWell(
+                        onTap: wm.mediumTodo,
+                        child: Container(
+                          color: priority != Priority.medium ? Colors.indigo[100] : Colors.indigo,
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(
+                              vertical: 10,
+                            ),
+                            child: Align(
+                              child: Text(
+                                'Medium',
+                                style: TextStyle(
+                                  color: priority != Priority.medium ? Colors.black : Colors.white,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    Expanded(
+                      child: InkWell(
+                        onTap: wm.lowTodo,
+                        child: Container(
+                          color: priority != Priority.low ? Colors.indigo[100] : Colors.indigo,
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(
+                              vertical: 10,
+                            ),
+                            child: Align(
+                              child: Text(
+                                'Low',
+                                style: TextStyle(
+                                  color: priority != Priority.low ? Colors.black : Colors.white,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.only(right: 8),
+                        child: InkWell(
+                          onTap: wm.noneTodo,
+                          child: Container(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.only(topRight: Radius.circular(6), bottomRight: Radius.circular(6)),
+                              color: priority != Priority.none ? Colors.indigo[100] : Colors.indigo,
+                            ),
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(
+                                vertical: 10,
+                              ),
+                              child: Align(
+                                child: Text(
+                                  'None',
+                                  style: TextStyle(
+                                    color: priority != Priority.none ? Colors.black : Colors.white,
                                   ),
                                 ),
                               ),
