@@ -11,6 +11,7 @@ TodoModel _$TodoModelFromJson(Map<String, dynamic> json) => TodoModel(
       description: json['description'] as String,
       dueTime: json['dueTime'] as String,
       priority: $enumDecode(_$PriorityEnumMap, json['priority']),
+      isCompleted: json['isCompleted'] as bool,
     );
 
 Map<String, dynamic> _$TodoModelToJson(TodoModel instance) => <String, dynamic>{
@@ -18,6 +19,7 @@ Map<String, dynamic> _$TodoModelToJson(TodoModel instance) => <String, dynamic>{
       'description': instance.description,
       'dueTime': instance.dueTime,
       'priority': _$PriorityEnumMap[instance.priority]!,
+      'isCompleted': instance.isCompleted,
     };
 
 const _$PriorityEnumMap = {

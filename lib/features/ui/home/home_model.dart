@@ -25,4 +25,8 @@ class HomeModel extends ElementaryModel {
   Future<void> navigateToAddTodo(BuildContext context) async {
     await Navigator.of(context).push(MaterialPageRoute(builder: (context) => const AddTodoScreenWidget()));
   }
+
+  void doNothing(BuildContext context, int index) {
+    
+  }
 }

@@ -148,10 +148,6 @@ class AddTodoScreenWidget extends ElementaryWidget<IAddTodoWidgetModel> {
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.only(topLeft: Radius.circular(6), bottomLeft: Radius.circular(6)),
                               color: priority != Priority.high ? Colors.indigo[100] : Colors.indigo,
-                              // border: const Border(right: BorderSide(
-                              //   color: Colors.red,
-                              //   width: 3.0
-                              // ))
                             ),
                             child: Padding(
                               padding: const EdgeInsets.symmetric(
@@ -243,9 +239,12 @@ class AddTodoScreenWidget extends ElementaryWidget<IAddTodoWidgetModel> {
                 );
               },
             ),
-            ElevatedButton(
-              onPressed: wm.addTodo,
-              child: const Text("Add new Todo"),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 16),
+              child: ElevatedButton(
+                onPressed: wm.addTodo,
+                child: const Text("Add new Todo"),
+              ),
             ),
           ],
         ),

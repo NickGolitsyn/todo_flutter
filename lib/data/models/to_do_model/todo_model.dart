@@ -16,11 +16,13 @@ class TodoModel {
     required this.description,
     required this.dueTime,
     required this.priority,
+    required this.isCompleted,
   });
   String title;
   String description;
   String dueTime;
   Priority priority;
+  bool isCompleted;
   
 
   factory TodoModel.fromJson(Map<String, dynamic> json) => _$TodoModelFromJson(json);

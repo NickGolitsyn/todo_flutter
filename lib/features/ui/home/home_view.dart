@@ -1,5 +1,6 @@
 import 'package:elementary/elementary.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:todo/data/models/to_do_model/todo_model.dart';
 import 'home_wm.dart';
 
@@ -25,7 +26,7 @@ class HomeScreenWidget extends ElementaryWidget<IHomeWidgetModel> {
         builder: (context, bool? data) {
           return Stack(
             children: [
-              data == true ? const Text('cmon') : const Text('hi'),
+              // data == true ? const Text('cmon') : const Text('hi'),
               SizedBox(
                 width: double.infinity,
                 child: Column(
@@ -34,6 +35,15 @@ class HomeScreenWidget extends ElementaryWidget<IHomeWidgetModel> {
                     EntityStateNotifierBuilder(
                       listenableEntityState: wm.todoModelListEntity,
                       builder: (context, List<TodoModel>? todoModels) {
+
+                        // if (data == true) {
+                        //   return const Text('true');
+                        // }
+                        
+                        //  if (data == false) {
+                        //   return const Text('false');
+                        // }
+
                         if (todoModels == null) {
                           return const Center(
                             child: CircularProgressIndicator(),
@@ -51,19 +61,21 @@ class HomeScreenWidget extends ElementaryWidget<IHomeWidgetModel> {
                             itemCount: todoModels.length,
                             itemBuilder: (context, index) {
                               return Padding(
-                                  padding: const EdgeInsets.only(top: 10, bottom: 10, left: 50, right: 50),
-                                  // child: Slidable(
-                                  //   endActionPane: ActionPane(
-                                  //     motion: StretchMotion(),
-                                  //     children: [
-                                  //       SlidableAction(
-                                  //         onPressed: doNothing,
-                                  //         icon: Icons.delete,
-                                  //         backgroundColor: Colors.red,
-                                  //         borderRadius: BorderRadius.circular(12),
-                                  //       )
-                                  //     ],
-                                  //   ),
+                                padding: const EdgeInsets.only(top: 10, bottom: 10, left: 50, right: 50),
+                                child: Slidable(
+                                  endActionPane: ActionPane(
+                                    motion: const StretchMotion(),
+                                    children: [
+                                      SlidableAction(
+                                        backgroundColor: Colors.red,
+                                        icon: Icons.delete,
+                                        label: 'Delete',
+                                        onPressed: (context) async => 
+                                          wm.deleteTodo(index),
+                                        borderRadius: BorderRadius.circular(12),
+                                      )
+                                    ],
+                                  ),
                                   child: Container(
                                     width: double.infinity,
                                     decoration: BoxDecoration(
@@ -96,17 +108,11 @@ class HomeScreenWidget extends ElementaryWidget<IHomeWidgetModel> {
                                           todoModels[index].dueTime,
                                           style: const TextStyle(color: Colors.white),
                                         ),
-                                        ElevatedButton(
-                                          onPressed: () async {
-                                            wm.deleteTodo(index);
-                                          },
-                                          child: const Text('Delete'),
-                                        ),
                                       ]),
                                     ),
                                   )
-                                  // ),
-                                  );
+                                ),
+                              );
                             },
                           ),
                         );

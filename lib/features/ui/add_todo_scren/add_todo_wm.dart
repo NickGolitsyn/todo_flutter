@@ -127,6 +127,7 @@ class AddTodoWidgetModel extends WidgetModel<AddTodoScreenWidget, AddTodoModel> 
       description: _descriptionController.text,
       dueTime: _dateController.text,
       priority: _priotityEntity.value!.data!,
+      isCompleted: false,
     );
 
     model.addTodo(todoModel);
@@ -164,7 +165,7 @@ class AddTodoWidgetModel extends WidgetModel<AddTodoScreenWidget, AddTodoModel> 
       lastDate: DateTime(2100),
     );
     if (pickeddate != null) {
-      date.text = DateFormat('yyyy-MM-dd').format(pickeddate);
+      date.text = DateFormat('EEEE, d MMMM y').format(pickeddate);
     }
   }
 }
