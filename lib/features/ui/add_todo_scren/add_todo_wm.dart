@@ -164,8 +164,11 @@ class AddTodoWidgetModel extends WidgetModel<AddTodoScreenWidget, AddTodoModel> 
       firstDate: DateTime.now(),
       lastDate: DateTime(2100),
     );
-    if (pickeddate != null) {
+    if (pickeddate != null && pickeddate.year != DateTime.now().year) {
       date.text = DateFormat('EEEE, d MMMM y').format(pickeddate);
+    }
+    if (pickeddate != null && pickeddate.year == DateTime.now().year) {
+      date.text = DateFormat('EEEE, d MMMM').format(pickeddate);
     }
   }
 }

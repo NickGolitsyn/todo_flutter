@@ -34,6 +34,31 @@ class AddTodoScreenWidget extends ElementaryWidget<IAddTodoWidgetModel> {
                 ),
               ),
             ),
+            EntityStateNotifierBuilder(
+            listenableEntityState: wm.errorListenable,
+            builder: (context, bool? data) {
+              if (data == true) {
+                return Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: const [
+                    SizedBox(
+                      height: 20,
+                    ),
+                    Text(
+                      'Title cannot me empty',
+                      style: TextStyle(
+                        color: Colors.red,
+                      ),
+                    ),
+                    SizedBox(
+                      height: 20,
+                    )
+                  ],
+                );
+              }
+              return Container();
+            },
+          ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
               child: TextFormField(
@@ -106,31 +131,6 @@ class AddTodoScreenWidget extends ElementaryWidget<IAddTodoWidgetModel> {
             // );
             // return dateTime;
             // }
-            EntityStateNotifierBuilder(
-              listenableEntityState: wm.errorListenable,
-              builder: (context, bool? data) {
-                if (data == true) {
-                  return Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: const [
-                      SizedBox(
-                        height: 20,
-                      ),
-                      Text(
-                        'Title cannot me empty',
-                        style: TextStyle(
-                          color: Colors.red,
-                        ),
-                      ),
-                      SizedBox(
-                        height: 20,
-                      )
-                    ],
-                  );
-                }
-                return Container();
-              },
-            ),
             EntityStateNotifierBuilder<Priority>(
               listenableEntityState: wm.priorytiListenable,
               builder: (context, Priority? priority) {

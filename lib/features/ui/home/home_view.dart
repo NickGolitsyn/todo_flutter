@@ -80,35 +80,66 @@ class HomeScreenWidget extends ElementaryWidget<IHomeWidgetModel> {
                                     width: double.infinity,
                                     decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(12),
-                                      color: (() {
-                                        switch (todoModels[index].priority) {
-                                          case Priority.high:
-                                            return Colors.red[400];
-                                          case Priority.medium:
-                                            return Colors.yellow[400];
-                                          case Priority.low:
-                                            return Colors.green[400];
-                                          case Priority.none:
-                                            return Colors.grey[400];
-                                        }
-                                      }()),
+                                      color: Colors.grey[300]
                                     ),
                                     child: Padding(
-                                      padding: const EdgeInsets.only(top: 20, bottom: 20),
-                                      child: Column(children: [
-                                        Text(
-                                          todoModels[index].title,
-                                          style: const TextStyle(color: Colors.white),
-                                        ),
-                                        Text(
-                                          todoModels[index].description,
-                                          style: const TextStyle(color: Colors.white),
-                                        ),
-                                        Text(
-                                          todoModels[index].dueTime,
-                                          style: const TextStyle(color: Colors.white),
-                                        ),
-                                      ]),
+                                      padding: const EdgeInsets.only(top: 16, bottom: 16, right: 16, left: 16),
+                                      child: Row(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: [
+                                          Expanded(
+                                            flex: 19,
+                                            child: Column(
+                                              crossAxisAlignment: CrossAxisAlignment.start,
+                                              children: [
+                                                Text(
+                                                  todoModels[index].title,
+                                                  style: const TextStyle(
+                                                    // color: Colors.white, 
+                                                    fontSize: 24, fontWeight: 
+                                                    FontWeight.bold
+                                                  ),
+                                                ),
+                                                if (todoModels[index].description != '')
+                                                Padding(
+                                                  padding: const EdgeInsets.only(top: 5),
+                                                  child: Text(
+                                                    todoModels[index].description,
+                                                    style: const TextStyle(color: Color(0xFF424242)),
+                                                  ),
+                                                ),
+                                              if (todoModels[index].dueTime != '')
+                                                Padding(
+                                                  padding: const EdgeInsets.only(top: 5),
+                                                  child: Text(
+                                                    todoModels[index].dueTime,
+                                                    style: const TextStyle(color: Color(0xFF616161)),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                          Expanded(
+                                            flex: 1,
+                                            child: Icon(
+                                              Icons.circle,
+                                              size: 16,
+                                              color: (() {
+                                                switch (todoModels[index].priority) {
+                                                  case Priority.high:
+                                                    return Colors.red[400];
+                                                  case Priority.medium:
+                                                    return Colors.yellow[400];
+                                                  case Priority.low:
+                                                    return Colors.green[400];
+                                                  case Priority.none:
+                                                    return Colors.grey[400];
+                                                }
+                                              }()),
+                                            ),
+                                          ),
+                                        ]
+                                      ),
                                     ),
                                   )
                                 ),
