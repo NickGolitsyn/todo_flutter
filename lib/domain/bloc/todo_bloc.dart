@@ -50,7 +50,44 @@ class TodoBloc extends Bloc<TodoEvent, TodoState> {
     emit(TodoLoadingBlocState());
 
     List<TodoModel> todoModel = await _todoRepository.loadTodo();
-
+    todoModel = _sortTodoModel(todoModel);
     emit(TodoLoadedBlocState(todoModel));
+  }
+
+  List<TodoModel> _sortTodoModel(List<TodoModel> todoModel) {
+    List<TodoModel> todoModelLow = [];
+    List<TodoModel> todoModelMedium = [];
+    List<TodoModel> todoModelHight = [];
+    List<TodoModel> todoModelNone = [];
+
+    for (int i = 0; i < todoModel.length; i++) {
+      switch (todoModel[i].priority) {
+        case Priority.high:
+          todoModelHight.add(todoModel[i]);
+          break;
+        case Priority.medium:
+          todoModelMedium.add(todoModel[i]);
+          break;
+        case Priority.low:
+          todoModelLow.add(todoModel[i]);
+          break;
+        case Priority.none:
+          todoModelNone.add(todoModel[i]);
+          break;
+      }
+    }
+
+    todoModel = todoModelHight;
+
+    for (int i = 0; i < todoModelMedium.length; i++) {
+      todoModel.add(todoModelMedium[i]);
+    }
+    for (int i = 0; i < todoModelLow.length; i++) {
+      todoModel.add(todoModelLow[i]);
+    }
+    for (int i = 0; i < todoModelNone.length; i++) {
+      todoModel.add(todoModelNone[i]);
+    }
+    return todoModel;
   }
 }
