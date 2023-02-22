@@ -35,11 +35,10 @@ class HomeScreenWidget extends ElementaryWidget<IHomeWidgetModel> {
                     EntityStateNotifierBuilder(
                       listenableEntityState: wm.todoModelListEntity,
                       builder: (context, List<TodoModel>? todoModels) {
-
                         // if (data == true) {
                         //   return const Text('true');
                         // }
-                        
+
                         //  if (data == false) {
                         //   return const Text('false');
                         // }
@@ -63,44 +62,38 @@ class HomeScreenWidget extends ElementaryWidget<IHomeWidgetModel> {
                               return Padding(
                                 padding: const EdgeInsets.only(top: 10, bottom: 10, left: 50, right: 50),
                                 child: Slidable(
-                                  endActionPane: ActionPane(
-                                    motion: const StretchMotion(),
-                                    children: [
-                                      SlidableAction(
-                                        backgroundColor: Colors.red,
-                                        icon: Icons.delete,
-                                        label: 'Delete',
-                                        onPressed: (context) async => 
-                                          wm.deleteTodo(index),
-                                        borderRadius: BorderRadius.circular(12),
-                                      )
-                                    ],
-                                  ),
-                                  child: Container(
-                                    width: double.infinity,
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(12),
-                                      color: Colors.grey[300]
+                                    endActionPane: ActionPane(
+                                      motion: const StretchMotion(),
+                                      children: [
+                                        SlidableAction(
+                                          backgroundColor: Colors.red,
+                                          icon: Icons.delete,
+                                          label: 'Delete',
+                                          onPressed: (context) async => wm.deleteTodo(index),
+                                          borderRadius: BorderRadius.circular(12),
+                                        )
+                                      ],
                                     ),
-                                    child: Padding(
-                                      padding: const EdgeInsets.only(top: 16, bottom: 16, right: 16, left: 16),
-                                      child: Row(
-                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                        children: [
-                                          Expanded(
-                                            flex: 19,
-                                            child: Column(
-                                              crossAxisAlignment: CrossAxisAlignment.start,
-                                              children: [
-                                                Text(
-                                                  todoModels[index].title,
-                                                  style: const TextStyle(
-                                                    // color: Colors.white, 
-                                                    fontSize: 24, fontWeight: 
-                                                    FontWeight.bold
-                                                  ),
-                                                ),
-                                                if (todoModels[index].description != '')
+                                    child: Container(
+                                      width: double.infinity,
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(12),
+                                        color: Colors.grey[300],
+                                      ),
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(16),
+                                        child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                                          Column(
+                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                todoModels[index].title,
+                                                style: const TextStyle(
+                                                    // color: Colors.white,
+                                                    fontSize: 24,
+                                                    fontWeight: FontWeight.bold),
+                                              ),
+                                              if (todoModels[index].description != '')
                                                 Padding(
                                                   padding: const EdgeInsets.only(top: 5),
                                                   child: Text(
@@ -116,33 +109,28 @@ class HomeScreenWidget extends ElementaryWidget<IHomeWidgetModel> {
                                                     style: const TextStyle(color: Color(0xFF616161)),
                                                   ),
                                                 ),
-                                              ],
-                                            ),
+                                            ],
                                           ),
-                                          Expanded(
-                                            flex: 1,
-                                            child: Icon(
-                                              Icons.circle,
-                                              size: 16,
-                                              color: (() {
-                                                switch (todoModels[index].priority) {
-                                                  case Priority.high:
-                                                    return Colors.red[400];
-                                                  case Priority.medium:
-                                                    return Colors.yellow[400];
-                                                  case Priority.low:
-                                                    return Colors.green[400];
-                                                  case Priority.none:
-                                                    return Colors.grey[400];
-                                                }
-                                              }()),
-                                            ),
+                                          const Spacer(),
+                                          Icon(
+                                            Icons.circle,
+                                            size: 16,
+                                            color: (() {
+                                              switch (todoModels[index].priority) {
+                                                case Priority.high:
+                                                  return Colors.red[400];
+                                                case Priority.medium:
+                                                  return Colors.yellow[400];
+                                                case Priority.low:
+                                                  return Colors.green[400];
+                                                case Priority.none:
+                                                  return Colors.grey[400];
+                                              }
+                                            }()),
                                           ),
-                                        ]
+                                        ]),
                                       ),
-                                    ),
-                                  )
-                                ),
+                                    )),
                               );
                             },
                           ),

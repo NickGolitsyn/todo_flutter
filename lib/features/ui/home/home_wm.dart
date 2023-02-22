@@ -24,8 +24,6 @@ abstract class IHomeWidgetModel extends IWidgetModel {
 
   void deleteTodo(int index);
 
-  void loadTodo();
-
   void doNothing(BuildContext context, int index);
 }
 
@@ -100,9 +98,6 @@ class HomeWidgetModel extends WidgetModel<HomeScreenWidget, HomeModel> implement
     model.loadTodo();
   }
 
-  @override
-  void loadTodo() {}
-
   final _contoller = TextEditingController();
 
   @override
@@ -121,7 +116,7 @@ class HomeWidgetModel extends WidgetModel<HomeScreenWidget, HomeModel> implement
     await model.navigateToAddTodo(context);
     model.loadTodo();
   }
-  
+
   @override
   void doNothing(BuildContext context, int index) {
     model.deleteTodo(index);

@@ -19,12 +19,6 @@ abstract class IAddTodoWidgetModel extends IWidgetModel {
 
   void goBack();
 
-  TextEditingController get title;
-
-  TextEditingController get description;
-
-  TextEditingController get date;
-
   void addTodo();
 
   void noneTodo();
@@ -37,7 +31,11 @@ abstract class IAddTodoWidgetModel extends IWidgetModel {
 
   Future<void> pickDate();
 
-  late Priority selectedPriority;
+  TextEditingController get title;
+
+  TextEditingController get description;
+
+  TextEditingController get date;
 }
 
 AddTodoWidgetModel addTodoWidgetModelFactory(BuildContext context) {
